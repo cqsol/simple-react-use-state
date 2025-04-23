@@ -4,7 +4,7 @@ A modern web application built with Next.js, TypeScript, and TailwindCSS.
 This app try to play around with useState show how it worked
 
 ## 🇨🇶 Live version
-[lmple-react-use-state.cqsol.c](http://simple-react-use-state.cqsol.com)
+[simple-react-use-state.cqsol.com](http://simple-react-use-state.cqsol.com)
 
 ## 🚀 Live gif
 ![UseState](https://github.com/user-attachments/assets/9ea9fa14-9976-4880-8bf3-61fb78ccde7d)
