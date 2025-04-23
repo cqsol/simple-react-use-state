@@ -1,40 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# My Next.js Application
 
-## Getting Started
+A modern web application built with Next.js, TypeScript, and TailwindCSS.
 
-First, run the development server:
+## 🚀 Features
 
+- ⚡ Next.js 15 with App Router
+- 🎨 TailwindCSS for styling
+- 📝 TypeScript for type safety
+- 🔥 Turbopack for fast development
+- 🌙 Dark mode support
+- 📱 Responsive design
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15.3.1
+- **Language**: TypeScript
+- **Styling**: TailwindCSS 4.1.4
+- **Package Manager**: npm
+- **Linting**: ESLint
+- **Development**: Turbopack
+
+## 📦 Installation
+
+1. Clone the repository:
+```bash
+git clone [your-repo-url]
+cd simple-react-use-state
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## 🏗️ Project Structure
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```
+my-app/
+├── src/
+│   ├── pages/           # Next.js pages
+│   ├── styles/          # Global styles
+│   └── types.ts         # TypeScript types
+├── public/             # Static files
+└── configuration files
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## 🎨 Styling
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project uses TailwindCSS for styling. You can find the global styles in `src/styles/globals.css`.
 
-## Learn More
+### Customization
 
-To learn more about Next.js, take a look at the following resources:
+- Theme colors are defined in CSS variables
+- Dark mode is automatically enabled based on system preferences
+- Custom utility classes can be added in `globals.css`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## 📝 Development
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `npm run dev` - Start development server with Turbopack
+- `npm run build` - Create production build
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
 
-## Deploy on Vercel
+## 🔧 Configuration
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `next.config.ts` - Next.js configuration
+- `tsconfig.json` - TypeScript configuration
+- `postcss.config.mjs` - PostCSS and TailwindCSS configuration
+- `eslint.config.mjs` - ESLint configuration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+## 📚 Documentation
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [TailwindCSS Documentation](https://tailwindcss.com/docs)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
