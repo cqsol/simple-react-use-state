@@ -1,81 +1,48 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useCallback } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import { Item } from "../types";
+import { RootState, AppDispatch } from '../store/store'; // Adjust path
+import { moveToCategoryWithTimeout, returnToInitial } from '../store/itemSlice'; // Adjust path
 
 export default function Home() {
-  const initialItems: Item[] = [
-    { type: 'Fruit', name: 'Apple' },
-    { type: 'Vegetable', name: 'Broccoli' },
-    { type: 'Vegetable', name: 'Mushroom' },
-    { type: 'Fruit', name: 'Banana' },
-    { type: 'Vegetable', name: 'Tomato' },
-    { type: 'Fruit', name: 'Orange' },
-    { type: 'Fruit', name: 'Mango' },
-    { type: 'Fruit', name: 'Pineapple' },
-    { type: 'Vegetable', name: 'Cucumber' },
-    { type: 'Fruit', name: 'Watermelon' },
-    { type: 'Vegetable', name: 'Carrot' },
-  ];
+  // Get state from Redux store
+  const { initial: items, fruits, vegetables } = useSelector((state: RootState) => state.items);
+  // Get the dispatch function
+  const dispatch = useDispatch<AppDispatch>();
 
-  const [items, setItems] = useState<Item[]>(initialItems);
-  const [fruits, setFruits] = useState<Item[]>([]);
-  const [vegetables, setVegetables] = useState<Item[]>([]);
-  const timeoutsRef = useRef<{ [key: string]: NodeJS.Timeout }>({});
+  // Determine if an item is currently in the initial list
+  const isItemInInitialList = useCallback((item: Item): boolean => {
+    // Check if an item with the same ID exists in the initial list from the store
+    return items.some(i => i.id === item.id);
+  }, [items]); // Dependency: items list from Redux
 
-  const handleReturn = useCallback((item: Item, setTargetList: React.Dispatch<React.SetStateAction<Item[]>>) => {
-    setTargetList(prev => prev.filter(i => i.name !== item.name));
-    setItems(prevItems => 
-      prevItems.some(i => i.name === item.name)
-        ? prevItems
-        : [...prevItems, item]
-    );
-  }, []);
-
-  const moveItem = useCallback((item: Item) => {
-    const isFruit = item.type === 'Fruit';
-    const setTargetList = isFruit ? setFruits : setVegetables;
-
-    if (items.includes(item)) {
-      setItems(prevItems => prevItems.filter(i => i.name !== item.name));
-      setTargetList(prev => [...prev, item]);
-      
-      if (timeoutsRef.current[item.name]) {
-        clearTimeout(timeoutsRef.current[item.name]);
-      }
-      
-      timeoutsRef.current[item.name] = setTimeout(() => {
-        handleReturn(item, setTargetList);
-        delete timeoutsRef.current[item.name];
-      }, 5000);
+  // Handle item click: dispatch appropriate Redux action
+  const handleItemClick = useCallback((item: Item) => {
+    if (isItemInInitialList(item)) {
+      // If in initial list, move to category with timeout
+      dispatch(moveToCategoryWithTimeout(item));
     } else {
-      if (timeoutsRef.current[item.name]) {
-        clearTimeout(timeoutsRef.current[item.name]);
-        delete timeoutsRef.current[item.name];
-      }
-      handleReturn(item, setTargetList);
+      // If in a category list, return to initial immediately
+      dispatch(returnToInitial(item));
     }
-  }, [items, handleReturn]);
+  }, [dispatch, isItemInInitialList]); // Dependencies: dispatch and the helper function
 
+  // Helper function to render a list (remains largely the same)
   const renderItemList = useCallback((itemList: Item[], title?: string) => (
     <div className="col-span-1">
       {title && <h2>{title}</h2>}
       {itemList.map((item) => (
         <button
-          key={item.name}
+          // Use the unique ID for the key now
+          key={item.id}
           className="block mb-2 p-2 border rounded"
-          onClick={() => moveItem(item)}
+          onClick={() => handleItemClick(item)} // Use the new handler
         >
           {item.name}
         </button>
       ))}
     </div>
-  ), [moveItem]);
-
-  // Cleanup timeouts on unmount
-  useEffect(() => {
-    return () => {
-      Object.values(timeoutsRef.current).forEach(clearTimeout);
-    };
-  }, []);
+  ), [handleItemClick]); // Dependency: the click handler
 
   return (
     <div className="grid grid-cols-3 gap-4 p-8">
